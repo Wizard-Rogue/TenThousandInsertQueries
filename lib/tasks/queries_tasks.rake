@@ -7,4 +7,11 @@ namespace :db do
       insert.save!
     end
   end
+
+  task :redis => :environment do
+    (1..10000).each do |x|
+      $redis.sadd("queries", x.to_s)
+    end
+    puts $redis.smembers("queries").count
+  end
 end
